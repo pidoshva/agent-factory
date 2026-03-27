@@ -72,6 +72,33 @@
     #hud .hud-stat {
       color: #00ffff;
     }
+
+    /* Chat input */
+    #chat-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+    }
+    #chat-input {
+      width: 300px;
+      padding: 6px 12px;
+      background: rgba(10, 10, 26, 0.9);
+      border: 1px solid #444;
+      border-radius: 4px;
+      color: #00ffff;
+      font-family: monospace;
+      font-size: 12px;
+      outline: none;
+    }
+    #chat-input::placeholder {
+      color: #555;
+    }
+    #chat-input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 8px color-mix(in srgb, var(--accent-color) 30%, transparent);
+    }
   </style>
 </head>
 <body>
@@ -86,6 +113,20 @@
     <div>Agents: <span class="hud-stat" id="hud-agents">0</span></div>
     <div>Connected: <span class="hud-stat" id="hud-connected">--</span></div>
   </div>
+  <div id="chat-bar">
+    <input id="chat-input" type="text" placeholder="Type /vortex..." autocomplete="off" />
+  </div>
   <script type="module" src="./main.ts"></script>
+  <script>
+    document.getElementById('chat-input').addEventListener('keydown', async (e) => {
+      if (e.key !== 'Enter') return;
+      const input = e.target;
+      const cmd = input.value.trim().toLowerCase();
+      input.value = '';
+      if (cmd === '/vortex') {
+        try { await fetch('/api/vortex', { method: 'POST' }); } catch {}
+      }
+    });
+  </script>
 </body>
 </html>

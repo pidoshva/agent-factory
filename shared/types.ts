@@ -75,7 +75,11 @@ export type WSMessageToClient =
   | { type: 'full_state'; agents: AgentSession[] }
   | { type: 'agent_update'; agent: AgentSession }
   | { type: 'agent_remove'; sessionId: string }
-  | { type: 'effect'; sessionId: string; effect: EffectType; data?: Record<string, unknown> };
+  | { type: 'effect'; sessionId: string; effect: EffectType; data?: Record<string, unknown> }
+  | { type: 'global_effect'; effect: GlobalEffectType; data?: Record<string, unknown> };
+
+// === Global Effect Types ===
+export type GlobalEffectType = 'vortex';
 
 // === WebSocket Messages: Browser -> Server ===
 export type WSMessageToServer =
